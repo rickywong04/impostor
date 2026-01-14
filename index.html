@@ -3,11 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WordSpy - Social Deduction Game</title>
-    <meta name="description"
-        content="A multiplayer social deduction word game. Prove you know the secret word while the imposter tries to blend in!">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Imposter - Social Deduction Game</title>
+    <meta name="description" content="A multiplayer social deduction game. Trust no one, find the imposter!">
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,11 +47,11 @@
             <!-- Logo Header -->
             <div class="text-center mb-8 animate-fade-in-up">
                 <div
-                    class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-red-500 to-red-600 text-white shadow-lg shadow-red-200">
-                    <span class="text-3xl font-bold font-quicksand">W</span>
+                    class="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-2xl bg-gray-900 text-white shadow-xl shadow-gray-400/50">
+                    <span class="text-5xl">🕵️</span>
                 </div>
-                <h1 class="text-3xl tracking-tight text-gray-900 font-bold font-quicksand">WordSpy</h1>
-                <p class="mt-2 text-sm text-gray-400">Social deduction, simplified.</p>
+                <h1 class="text-4xl tracking-tight text-gray-900 font-black font-quicksand uppercase">Imposter</h1>
+                <p class="mt-2 text-sm font-medium text-gray-500 uppercase tracking-widest">Trust No One</p>
             </div>
 
             <!-- Game Entry Card -->
@@ -572,6 +575,9 @@
         <!-- Game Logic Script -->
         <script src="game.js"></script>
 
+        <!-- Firebase Client -->
+        <script src="firebaseClient.js"></script>
+
         <!-- UI Controller Script -->
         <script>
             // ===========================================
@@ -730,7 +736,6 @@
                 }
             }
 
-
             // ===========================================
             // ONLINE MODE HANDLERS
             // ===========================================
@@ -738,9 +743,24 @@
                 const nickname = document.getElementById('host-nickname').value.trim();
                 if (!nickname) return;
 
-                isLocalMode = false;  // Online mode
-                const roomCode = hostGame(nickname);
-                showWaitingRoom();
+                isLocalMode = false;
+
+                // Initialize socket if needed
+                if (typeof initSocket === 'function') {
+                    initSocket();
+                }
+
+                // Create room via socket
+                socketCreateRoom(nickname, (result) => {
+                    if (result.success) {
+                        gameState.roomCode = result.roomCode;
+                        gameState.players = result.players;
+                        gameState.isHost = true;
+                        showWaitingRoom();
+                    } else {
+                        alert(result.error || 'Failed to create room');
+                    }
+                });
             }
 
             function handleJoin() {
@@ -748,13 +768,24 @@
                 const code = document.getElementById('join-code').value.trim().toUpperCase();
                 if (!nickname || !code) return;
 
-                isLocalMode = false;  // Online mode
-                const result = joinGame(nickname, code);
-                if (result.success) {
-                    showWaitingRoom();
-                } else {
-                    alert(result.error);
+                isLocalMode = false;
+
+                // Initialize socket if needed
+                if (typeof initSocket === 'function') {
+                    initSocket();
                 }
+
+                // Join room via socket
+                socketJoinRoom(nickname, code, (result) => {
+                    if (result.success) {
+                        gameState.roomCode = result.roomCode;
+                        gameState.players = result.players;
+                        gameState.isHost = false;
+                        showWaitingRoom();
+                    } else {
+                        alert(result.error || 'Failed to join room');
+                    }
+                });
             }
 
 
@@ -811,13 +842,69 @@
             }
 
             function handleStartGame() {
-                const result = startGame();
-                if (result.success) {
-                    showRevealScreen();
+                if (isLocalMode) {
+                    // Local mode - use existing logic
+                    const result = startGame();
+                    if (result.success) {
+                        showRevealScreen();
+                    } else {
+                        alert(result.error);
+                    }
                 } else {
-                    alert(result.error);
+                    // Online mode - use socket
+                    socketStartGame((result) => {
+                        if (!result.success) {
+                            alert(result.error || 'Failed to start game');
+                        }
+                        // Server will emit 'game-started' event which triggers showOnlineRevealScreen
+                    });
                 }
             }
+
+            // Online reveal screen handler (called from socketClient.js)
+            function showOnlineRevealScreen(data) {
+                // Store personal data
+                gameState.myTopic = data.topic;
+                gameState.myWord = data.word;
+                gameState.isImposter = data.isImposter;
+                gameState.myIndex = data.myIndex;
+
+                // Show the role for this player directly (no passing device)
+                document.getElementById('role-topic').textContent = data.topic;
+                document.getElementById('role-word').textContent = data.word;
+
+                if (data.isImposter) {
+                    document.getElementById('role-icon').textContent = '🕵️';
+                    document.getElementById('role-word').classList.add('text-red-500');
+                    document.getElementById('role-hint').textContent = 'You are the IMPOSTER! Blend in...';
+                    document.getElementById('role-card').classList.add('border-red-200');
+                } else {
+                    document.getElementById('role-icon').textContent = '👤';
+                    document.getElementById('role-word').classList.remove('text-red-500');
+                    document.getElementById('role-hint').textContent = 'Find the imposter!';
+                    document.getElementById('role-card').classList.remove('border-red-200');
+                }
+
+                // Show revealed card directly (no hidden card for online)
+                document.getElementById('reveal-player-name').textContent = 'Your Role';
+                document.getElementById('reveal-hidden').classList.add('hidden');
+                document.getElementById('reveal-shown').classList.remove('hidden');
+
+                // Change button text for online mode
+                const readyBtn = document.querySelector('#reveal-shown button');
+                if (readyBtn) {
+                    readyBtn.textContent = "I'm Ready!";
+                    readyBtn.onclick = () => {
+                        socketPlayerReady();
+                        readyBtn.disabled = true;
+                        readyBtn.textContent = 'Waiting for others...';
+                    };
+                }
+
+                showScreen('screen-reveal');
+            }
+
+            window.showOnlineRevealScreen = showOnlineRevealScreen;
 
             // ===========================================
             // REVEAL PHASE
@@ -904,7 +991,171 @@
             }
 
             // ===========================================
-            // SUBMISSION PHASE (Online mode only)
+            // ONLINE SUBMISSION PHASE
+            // ===========================================
+            function showOnlineSubmissionScreen(currentTurnIndex) {
+                document.getElementById('submission-topic').textContent = gameState.myTopic || gameState.currentWordData?.topic;
+
+                const isMyTurn = currentTurnIndex === gameState.myIndex;
+                const currentPlayer = gameState.players[currentTurnIndex];
+
+                document.getElementById('current-turn-avatar').textContent = currentPlayer.avatar;
+                document.getElementById('current-turn-name').textContent = currentPlayer.name;
+
+                const input = document.getElementById('word-input');
+                const submitBtn = document.querySelector('#screen-submission button[type="submit"]');
+
+                if (isMyTurn) {
+                    input.disabled = false;
+                    input.placeholder = 'Your turn! Enter your word...';
+                    input.focus();
+                    submitBtn.disabled = false;
+                } else {
+                    input.disabled = true;
+                    input.placeholder = `Waiting for ${currentPlayer.name}...`;
+                    submitBtn.disabled = true;
+                }
+
+                updateSubmittedWordsList();
+                showScreen('screen-submission');
+            }
+
+            function updateOnlineSubmissionUI(currentTurnIndex) {
+                showOnlineSubmissionScreen(currentTurnIndex);
+            }
+
+            // Override handleWordSubmit for online mode
+            const originalHandleWordSubmit = typeof handleWordSubmit === 'function' ? handleWordSubmit : null;
+
+            function handleWordSubmit(auto = false) {
+                if (isLocalMode && originalHandleWordSubmit) {
+                    return originalHandleWordSubmit(auto);
+                }
+
+                // Online mode
+                const input = document.getElementById('word-input');
+                let word = input.value.trim();
+
+                if (!word && auto) {
+                    word = '(skipped)';
+                }
+
+                if (!word) return;
+
+                input.value = '';
+                socketSubmitWord(word);
+            }
+
+            window.showOnlineSubmissionScreen = showOnlineSubmissionScreen;
+            window.updateOnlineSubmissionUI = updateOnlineSubmissionUI;
+
+            // ===========================================
+            // ONLINE VOTING PHASE
+            // ===========================================
+            function showOnlineVotingScreen() {
+                const myPlayer = gameState.players[gameState.myIndex];
+                document.getElementById('voting-player-name').textContent = 'Cast Your Vote';
+                selectedVote = -1;
+                document.getElementById('confirm-vote-btn').disabled = true;
+
+                const options = document.getElementById('voting-options');
+                options.innerHTML = gameState.players.map((player, index) => {
+                    if (index === gameState.myIndex) return ''; // Can't vote for yourself
+                    return `
+                    <button onclick="selectOnlineVote(${index})" id="vote-option-${index}" 
+                        class="vote-option w-full flex items-center gap-3 rounded-xl border-2 border-gray-100 bg-white p-4 text-left transition hover:border-gray-200">
+                        <span class="text-2xl">${player.avatar}</span>
+                        <span class="font-medium text-gray-900">${player.name}</span>
+                        <span class="iconify ml-auto text-gray-300" data-icon="lucide:circle" data-width="20"></span>
+                    </button>
+                `;
+                }).join('');
+
+                // Update confirm button for online
+                const confirmBtn = document.getElementById('confirm-vote-btn');
+                confirmBtn.onclick = handleOnlineConfirmVote;
+
+                showScreen('screen-voting');
+            }
+
+            function selectOnlineVote(playerIndex) {
+                selectedVote = playerIndex;
+                selectVote(playerIndex);
+            }
+
+            function handleOnlineConfirmVote() {
+                if (selectedVote < 0) return;
+                socketCastVote(selectedVote);
+
+                // Disable voting UI
+                document.getElementById('confirm-vote-btn').disabled = true;
+                document.getElementById('confirm-vote-btn').textContent = 'Vote submitted...';
+            }
+
+            function updateVoteProgress(received, total) {
+                document.getElementById('confirm-vote-btn').textContent = `Waiting for votes (${received}/${total})...`;
+            }
+
+            window.showOnlineVotingScreen = showOnlineVotingScreen;
+            window.updateVoteProgress = updateVoteProgress;
+
+            // ===========================================
+            // ONLINE RESULTS
+            // ===========================================
+            function showOnlineResultsScreen(results) {
+                const header = document.getElementById('result-header');
+                const tallyContainer = document.getElementById('vote-tally').parentElement;
+
+                tallyContainer.classList.remove('hidden');
+
+                if (results.imposterCaught) {
+                    header.innerHTML = `
+                    <div class="text-6xl mb-4 animate-bounce-slow">🎉</div>
+                    <h2 class="text-3xl font-bold text-green-600 font-quicksand">Crew Wins!</h2>
+                    <p class="mt-2 text-gray-500">The imposter has been caught!</p>
+                `;
+                } else if (results.tie) {
+                    header.innerHTML = `
+                    <div class="text-6xl mb-4">😅</div>
+                    <h2 class="text-3xl font-bold text-yellow-600 font-quicksand">It's a Tie!</h2>
+                    <p class="mt-2 text-gray-500">No one was voted out.</p>
+                `;
+                } else {
+                    header.innerHTML = `
+                    <div class="text-6xl mb-4 animate-bounce-slow">🕵️</div>
+                    <h2 class="text-3xl font-bold text-red-600 font-quicksand">Imposter Wins!</h2>
+                    <p class="mt-2 text-gray-500">The imposter escaped detection!</p>
+                `;
+                }
+
+                document.getElementById('result-imposter-name').textContent = results.imposterName;
+                document.getElementById('result-secret-word').textContent = results.secretWord;
+                document.getElementById('result-topic').textContent = `Topic: ${results.topic}`;
+
+                // Show vote tally
+                const tally = document.getElementById('vote-tally');
+                tally.innerHTML = gameState.players.map((player, index) => {
+                    const votes = results.votesTally[index] || 0;
+                    const isImposter = index === results.imposterIndex;
+                    const wasVotedOut = index === results.votedOutIndex;
+
+                    return `
+                    <div class="flex items-center gap-3 rounded-lg ${wasVotedOut ? 'bg-red-50' : 'bg-gray-100'} p-2">
+                        <span class="text-xl">${player.avatar}</span>
+                        <span class="font-medium ${isImposter ? 'text-red-600' : 'text-gray-700'}">${player.name}</span>
+                        ${isImposter ? '<span class="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full">Imposter</span>' : ''}
+                        <span class="ml-auto text-sm font-semibold text-gray-500">${votes} vote${votes !== 1 ? 's' : ''}</span>
+                    </div>
+                `;
+                }).join('');
+
+                showScreen('screen-results');
+            }
+
+            window.showOnlineResultsScreen = showOnlineResultsScreen;
+
+            // ===========================================
+            // SUBMISSION PHASE (Local mode only now)
             // ===========================================
             function showSubmissionScreen() {
                 document.getElementById('submission-topic').textContent = gameState.currentWordData.topic;
