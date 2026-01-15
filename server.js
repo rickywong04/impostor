@@ -274,11 +274,14 @@ io.on('connection', (socket) => {
 
         // Check if all votes are in
         if (Object.keys(room.gameState.votes).length >= room.players.length) {
-            // Tally votes
+            // Tally votes (excluding skip votes with index -1)
             const tally = {};
             for (const idx in room.gameState.votes) {
                 const suspect = room.gameState.votes[idx];
-                tally[suspect] = (tally[suspect] || 0) + 1;
+                // Skip votes (index -1) are not counted in the tally
+                if (suspect !== -1) {
+                    tally[suspect] = (tally[suspect] || 0) + 1;
+                }
             }
 
             let maxVotes = 0;

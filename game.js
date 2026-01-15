@@ -274,7 +274,10 @@ function tallyVotes() {
 
     for (const voterIndex in gameState.votes) {
         const suspectIndex = gameState.votes[voterIndex];
-        tally[suspectIndex] = (tally[suspectIndex] || 0) + 1;
+        // Skip votes (index -1) are not counted in the tally
+        if (suspectIndex !== -1) {
+            tally[suspectIndex] = (tally[suspectIndex] || 0) + 1;
+        }
     }
 
     // Find player with most votes
