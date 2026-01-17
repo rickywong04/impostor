@@ -5,7 +5,7 @@ A multiplayer social deduction party game. One player is the Impostor who must b
 **Play now at [impostorhunt.com](https://www.impostorhunt.com)**
 
 <p align="center">
-  <img width="3232" height="2211" alt="image" src="https://github.com/user-attachments/assets/32ceb218-dcb1-472d-ac48-0913bbba9c83" />
+  <img width="1616" height="1098" alt="home_page" src="https://github.com/user-attachments/assets/6935cc1b-a4fc-4b19-ba4f-c89fcc1c418b" />
 </p>
 
 
@@ -18,9 +18,11 @@ A multiplayer social deduction party game. One player is the Impostor who must b
 **Deduction:** The Impostor must blend in by guessing from context clues. The crew votes to identify the Impostor.
 
 <p align="center">
-<img height="260" alt="image" src="https://github.com/user-attachments/assets/3b4ebf10-8962-4383-9397-80456c71e645" />
-<img  height="300" alt="image" src="https://github.com/user-attachments/assets/e111f3dc-4093-48bf-afbb-87a523dc36e5" />
-<img height="300" alt="image" src="https://github.com/user-attachments/assets/60bc8c10-54b6-4b29-bbe2-51cac98aa87c" />
+<img width="258" alt="reveal" src="https://github.com/user-attachments/assets/33515390-8ba4-4439-bf7e-0629d067816f" />
+<img width="255" alt="imposter" src="https://github.com/user-attachments/assets/f2a9fef2-b1d7-4857-bbb2-346c96fa7b30" />
+<img width="252"alt="crew" src="https://github.com/user-attachments/assets/865f1be4-1dff-45b5-8dfb-aa4a7a02c152" />
+
+
 </p>
 
 ## Game Modes
