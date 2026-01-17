@@ -18,9 +18,9 @@ A multiplayer social deduction party game. One player is the Impostor who must b
 **Deduction:** The Impostor must blend in by guessing from context clues. The crew votes to identify the Impostor.
 
 <p align="center">
-<img width="328" height="414" alt="reveal" src="https://github.com/user-attachments/assets/33515390-8ba4-4439-bf7e-0629d067816f" />
-<img width="305" height="568" alt="imposter" src="https://github.com/user-attachments/assets/f2a9fef2-b1d7-4857-bbb2-346c96fa7b30" />
-<img width="302" height="565" alt="crew" src="https://github.com/user-attachments/assets/865f1be4-1dff-45b5-8dfb-aa4a7a02c152" />
+<img width="278" alt="reveal" src="https://github.com/user-attachments/assets/33515390-8ba4-4439-bf7e-0629d067816f" />
+<img width="285" alt="imposter" src="https://github.com/user-attachments/assets/f2a9fef2-b1d7-4857-bbb2-346c96fa7b30" />
+<img width="282"alt="crew" src="https://github.com/user-attachments/assets/865f1be4-1dff-45b5-8dfb-aa4a7a02c152" />
 
 
 </p>
