@@ -22,7 +22,7 @@ const io = new Server(httpServer, {
 // Room storage
 const rooms = new Map();
 
-const AVATARS = ['😀', '😎', '🤠', '🥳', '😺', '🦊', '🐸', '🦉', '🐙', '🦋', '🌸', '⭐', '🔥', '💎', '🎮', '🎨'];
+const AVATARS = ['lucide:user', 'lucide:smile', 'lucide:zap', 'lucide:star', 'lucide:heart', 'lucide:music', 'lucide:camera', 'lucide:sun', 'lucide:moon', 'lucide:cloud', 'lucide:umbrella', 'lucide:coffee', 'lucide:pizza', 'lucide:gift', 'lucide:rocket', 'lucide:ghost'];
 
 // Utility functions
 function generateRoomCode() {
@@ -471,5 +471,5 @@ app.use(express.static('.'));
 
 const PORT = process.env.PORT || 3000;
 httpServer.listen(PORT, () => {
-    console.log(`\n🕵️  Impostor Game Server running on http://localhost:${PORT}\n`);
+    console.log(`\nImpostor Game Server running on http://localhost:${PORT}\n`);
 });

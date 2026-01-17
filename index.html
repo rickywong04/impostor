@@ -42,8 +42,8 @@
     <!-- Spline 3D Background (injected from env) -->
     <div class="spline-container fixed inset-0 w-full h-screen -z-10 pointer-events-none"
         style="mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent); -webkit-mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent);">
-        <iframe src="{{SPLINE_URL}}"
-            frameborder="0" width="100%" height="100%" id="aura-spline" style="pointer-events: none;"></iframe>
+        <iframe src="{{SPLINE_URL}}" frameborder="0" width="100%" height="100%" id="aura-spline"
+            style="pointer-events: none;"></iframe>
     </div>
 
     <!-- Fallback Background Decoration (shows while Spline loads) -->
@@ -201,11 +201,11 @@
                                 <div class="flex items-center gap-3">
                                     <div
                                         class="flex h-10 w-10 items-center justify-center rounded-full bg-white text-purple-400 shadow-sm ring-1 ring-gray-100 transition group-hover:text-purple-500 group-hover:ring-purple-100">
-                                        <span class="text-xl">🃏</span>
+                                        <span class="iconify text-xl" data-icon="lucide:party-popper"></span>
                                     </div>
                                     <div class="flex flex-col">
                                         <span class="text-sm font-semibold text-gray-700">Include Jester</span>
-                                        <span class="text-xs text-gray-400">One player wins by getting voted out</span>
+                                        <span class="text-xs text-gray-400">Wins by getting voted out</span>
                                     </div>
                                 </div>
                                 <div class="relative flex items-center">
@@ -222,7 +222,7 @@
                                 <div class="flex items-center gap-3">
                                     <div
                                         class="flex h-10 w-10 items-center justify-center rounded-full bg-white text-amber-400 shadow-sm ring-1 ring-gray-100 transition group-hover:text-amber-500 group-hover:ring-amber-100">
-                                        <span class="text-xl">🙈</span>
+                                        <span class="iconify text-xl" data-icon="lucide:eye-off"></span>
                                     </div>
                                     <div class="flex flex-col">
                                         <span class="text-sm font-semibold text-gray-700">Hide Topic from Crew</span>
@@ -243,7 +243,7 @@
                                 <div class="flex items-center gap-3">
                                     <div
                                         class="flex h-10 w-10 items-center justify-center rounded-full bg-white text-emerald-400 shadow-sm ring-1 ring-gray-100 transition group-hover:text-emerald-500 group-hover:ring-emerald-100">
-                                        <span class="text-xl">💡</span>
+                                        <span class="iconify text-xl" data-icon="lucide:lightbulb"></span>
                                     </div>
                                     <div class="flex flex-col">
                                         <span class="text-sm font-semibold text-gray-700">Give Impostor a Hint</span>
@@ -429,7 +429,7 @@
                             <span class="font-semibold text-purple-700">Include Jester</span>
                             <p class="text-xs text-purple-500">One player wins by getting voted out (4+ players)</p>
                         </div>
-                        <span class="text-2xl">🃏</span>
+                        <span class="iconify text-2xl" data-icon="lucide:party-popper"></span>
                     </label>
 
                     <!-- Game Twist Options -->
@@ -447,7 +447,7 @@
                             <span class="font-semibold text-amber-700">Hide Topic from Crew</span>
                             <p class="text-xs text-amber-500">Crew only sees the word, not the category</p>
                         </div>
-                        <span class="text-2xl">🙈</span>
+                        <span class="iconify text-2xl" data-icon="lucide:eye-off"></span>
                     </label>
                     <label
                         class="group flex items-center gap-3 rounded-xl bg-emerald-50 p-3 cursor-pointer hover:bg-emerald-100 transition">
@@ -463,7 +463,7 @@
                             <span class="font-semibold text-emerald-700">Give Impostor a Hint</span>
                             <p class="text-xs text-emerald-500">Impostor gets a related word to help blend in</p>
                         </div>
-                        <span class="text-2xl">💡</span>
+                        <span class="iconify text-2xl" data-icon="lucide:lightbulb"></span>
                     </label>
                 </div>
 
@@ -502,7 +502,7 @@
                 <div id="reveal-hidden" class="cursor-pointer" onclick="revealRole()">
                     <div
                         class="mx-auto w-72 rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50 p-12 transition hover:border-red-300 hover:bg-red-50/30">
-                        <div class="text-6xl mb-4">🔒</div>
+                        <div class="mb-4"><span class="iconify text-6xl" data-icon="lucide:lock"></span></div>
                         <p class="text-gray-500 font-medium">Tap to reveal your role</p>
                         <p class="mt-2 text-xs text-gray-400">Make sure only you can see!</p>
                     </div>
@@ -544,7 +544,7 @@
                 Leave Game
             </button>
             <div class="mb-6 animate-fade-in-up">
-                <div class="text-6xl mb-4">🎮</div>
+                <div class="mb-4"><span class="iconify text-6xl" data-icon="lucide:gamepad-2"></span></div>
                 <h2 class="text-3xl font-bold text-gray-900 font-quicksand">Let's Play!</h2>
                 <p class="mt-2 text-gray-500">Everyone has seen their role. Time to talk!</p>
             </div>
@@ -795,7 +795,7 @@
                             <span class="font-semibold text-purple-700">Include Jester</span>
                             <p class="text-xs text-purple-500">One player wins by getting voted out</p>
                         </div>
-                        <span class="text-2xl">🃏</span>
+                        <span class="iconify text-2xl" data-icon="lucide:party-popper"></span>
                     </label>
                 </div>
 
@@ -814,7 +814,7 @@
                         <span class="font-semibold text-amber-700">Hide Topic from Crew</span>
                         <p class="text-xs text-amber-500">Crew only sees the word, not the category</p>
                     </div>
-                    <span class="text-2xl">🙈</span>
+                    <span class="iconify text-2xl" data-icon="lucide:eye-off"></span>
                 </label>
 
                 <!-- Give Impostor a Hint -->
@@ -832,7 +832,7 @@
                         <span class="font-semibold text-emerald-700">Give Impostor a Hint</span>
                         <p class="text-xs text-emerald-500">Impostor gets a related word to help blend in</p>
                     </div>
-                    <span class="text-2xl">💡</span>
+                    <span class="iconify text-2xl" data-icon="lucide:lightbulb"></span>
                 </label>
             </div>
 
@@ -1247,7 +1247,7 @@
 
             list.innerHTML = gameState.players.map((player, index) => `
                 <div class="flex items-center gap-3 rounded-xl bg-gray-50 p-3 animate-fade-in">
-                    <span class="text-2xl">${player.avatar}</span>
+                    <span class="iconify text-2xl" data-icon="${player.avatar}"></span>
                     <span class="font-medium text-gray-900">${player.name}</span>
                     ${player.isHost ? '<span class="ml-auto rounded-full bg-red-100 px-2 py-0.5 text-xs font-semibold text-red-600">Host</span>' : ''}
                     ${!player.isHost && gameState.isHost ? `<button onclick="handleRemovePlayer(${index})" class="ml-auto p-1 rounded hover:bg-gray-200"><span class="iconify text-gray-400" data-icon="lucide:x" data-width="16"></span></button>` : ''}
@@ -1331,7 +1331,7 @@
 
             if (data.isImpostor) {
                 // Impostor sees: Topic + Hint word (if hint enabled)
-                document.getElementById('role-icon').textContent = '🕵️';
+                document.getElementById('role-icon').innerHTML = '<span class="iconify" data-icon="lucide:venetian-mask" data-width="64"></span>';
                 topicContainer.classList.remove('hidden');
                 topicLabel.textContent = 'TOPIC';
                 document.getElementById('role-topic').textContent = data.topic;
@@ -1349,7 +1349,7 @@
                 roleCard.classList.add('ring-2', 'ring-red-200');
             } else if (data.isJester) {
                 // Jester sees: Word (and topic if not hidden)
-                document.getElementById('role-icon').textContent = '🃏';
+                document.getElementById('role-icon').innerHTML = '<span class="iconify" data-icon="lucide:party-popper" data-width="64"></span>';
                 if (data.topic) {
                     topicContainer.classList.remove('hidden');
                     topicLabel.textContent = 'TOPIC';
@@ -1364,7 +1364,7 @@
                 document.getElementById('role-hint').textContent = 'You are the JESTER! Try to get voted out to win.';
             } else {
                 // Crew sees: Word (and topic if not hidden)
-                document.getElementById('role-icon').textContent = '✅';
+                document.getElementById('role-icon').innerHTML = '<span class="iconify" data-icon="lucide:shield-check" data-width="64"></span>';
                 if (data.topic) {
                     topicContainer.classList.remove('hidden');
                     topicLabel.textContent = 'TOPIC';
@@ -1427,7 +1427,7 @@
 
             if (info.isImpostor) {
                 // Impostor sees: Topic + Hint (if enabled)
-                document.getElementById('role-icon').textContent = '🕵️';
+                document.getElementById('role-icon').innerHTML = '<span class="iconify" data-icon="lucide:venetian-mask" data-width="64"></span>';
                 topicContainer.classList.remove('hidden');
                 topicLabel.textContent = 'TOPIC';
                 document.getElementById('role-topic').textContent = info.topic;
@@ -1445,7 +1445,7 @@
                 roleCard.classList.add('ring-2', 'ring-red-200');
             } else if (info.isJester) {
                 // Jester sees: Word (and topic if not hidden)
-                document.getElementById('role-icon').textContent = '🃏';
+                document.getElementById('role-icon').innerHTML = '<span class="iconify" data-icon="lucide:party-popper" data-width="64"></span>';
                 if (info.topic) {
                     topicContainer.classList.remove('hidden');
                     topicLabel.textContent = 'TOPIC';
@@ -1460,7 +1460,7 @@
                 document.getElementById('role-hint').textContent = 'You are the JESTER! Try to get voted out to win.';
             } else {
                 // Crew sees: Word (and topic if not hidden)
-                document.getElementById('role-icon').textContent = '✅';
+                document.getElementById('role-icon').innerHTML = '<span class="iconify" data-icon="lucide:shield-check" data-width="64"></span>';
                 if (info.topic) {
                     topicContainer.classList.remove('hidden');
                     topicLabel.textContent = 'TOPIC';
@@ -1502,7 +1502,7 @@
             // Set first player
             const firstPlayerIndex = gameState.turnOrder[0];
             const firstPlayer = gameState.players[firstPlayerIndex];
-            document.getElementById('local-start-first-avatar').textContent = firstPlayer.avatar;
+            document.getElementById('local-start-first-avatar').innerHTML = `<span class="iconify text-3xl" data-icon="${firstPlayer.avatar}"></span>`;
             document.getElementById('local-start-first-name').textContent = firstPlayer.name;
 
             // Build turn order display
@@ -1512,11 +1512,11 @@
                 const isFirst = orderIndex === 0;
                 return `
                         <div class="flex items-center gap-1 rounded-full ${isFirst ? 'bg-red-100 text-red-600' : 'bg-gray-100 text-gray-600'} px-3 py-1">
-                            <span class="text-sm">${player.avatar}</span>
+                            <span class="iconify text-sm" data-icon="${player.avatar}"></span>
                             <span class="text-xs font-medium">${player.name}</span>
                         </div>
                     `;
-            }).join('<span class="text-gray-300">→</span>');
+            }).join('<span class="iconify text-gray-300" data-icon="lucide:arrow-right" data-width="16"></span>');
 
             showScreen('screen-local-start');
         }
@@ -1615,7 +1615,7 @@
                 return `
                     <button onclick="selectOnlineVote(${index})" id="vote-option-${index}"
                         class="vote-option w-full flex items-center gap-3 rounded-xl border-2 border-gray-100 bg-white p-4 text-left transition hover:border-gray-200">
-                        <span class="text-2xl">${player.avatar}</span>
+                        <span class="iconify text-2xl" data-icon="${player.avatar}"></span>
                         <span class="font-medium text-gray-900">${player.name}</span>
                         <span class="iconify ml-auto text-gray-300" data-icon="lucide:circle" data-width="20"></span>
                     </button>
@@ -1623,7 +1623,7 @@
             }).join('') + `
                     <button onclick="selectOnlineVote(-1)" id="vote-option-skip"
                         class="vote-option w-full flex items-center gap-3 rounded-xl border-2 border-gray-100 bg-white p-4 text-left transition hover:border-gray-200">
-                        <span class="text-2xl">⏭️</span>
+                        <span class="iconify text-2xl" data-icon="lucide:skip-forward"></span>
                         <span class="font-medium text-gray-600">Skip Vote</span>
                         <span class="iconify ml-auto text-gray-300" data-icon="lucide:circle" data-width="20"></span>
                     </button>
@@ -1668,19 +1668,19 @@
 
             if (results.imposterCaught) {
                 header.innerHTML = `
-                    <div class="text-6xl mb-4 animate-bounce-slow">🎉</div>
+                    <div class="mb-4 animate-bounce-slow"><span class="iconify text-6xl" data-icon="lucide:trophy"></span></div>
                     <h2 class="text-3xl font-bold text-green-600 font-quicksand">Crew Wins!</h2>
                     <p class="mt-2 text-gray-500">The imposter has been caught!</p>
                 `;
             } else if (results.tie) {
                 header.innerHTML = `
-                    <div class="text-6xl mb-4">😅</div>
+                    <div class="mb-4"><span class="iconify text-6xl" data-icon="lucide:frown"></span></div>
                     <h2 class="text-3xl font-bold text-yellow-600 font-quicksand">It's a Tie!</h2>
                     <p class="mt-2 text-gray-500">No one was voted out.</p>
                 `;
             } else {
                 header.innerHTML = `
-                    <div class="text-6xl mb-4 animate-bounce-slow">🕵️</div>
+                    <div class="mb-4 animate-bounce-slow"><span class="iconify text-6xl" data-icon="lucide:venetian-mask"></span></div>
                     <h2 class="text-3xl font-bold text-red-600 font-quicksand">Imposter Wins!</h2>
                     <p class="mt-2 text-gray-500">The imposter escaped detection!</p>
                 `;
@@ -1832,7 +1832,7 @@
                 // Online mode - show vote button for host, waiting message for others
                 const timerEl = document.getElementById('discussion-timer');
                 if (gameState.isHost) {
-                    timerEl.textContent = '⏳';
+                    timerEl.innerHTML = '<span class="iconify" data-icon="lucide:timer"></span>';
                     // Add click handler to discussion proceed button if it exists
                     const proceedBtn = document.getElementById('proceed-to-vote-btn');
                     if (proceedBtn) {
@@ -1840,7 +1840,7 @@
                         proceedBtn.textContent = 'Start Voting';
                     }
                 } else {
-                    timerEl.textContent = '💬';
+                    timerEl.innerHTML = '<span class="iconify" data-icon="lucide:message-circle"></span>';
                     // Hide proceed button for non-hosts
                     const proceedBtn = document.getElementById('proceed-to-vote-btn');
                     if (proceedBtn) {
@@ -1904,7 +1904,7 @@
                 return `
                     <button onclick="selectVote(${index})" id="vote-option-${index}"
                         class="vote-option w-full flex items-center gap-3 rounded-xl border-2 border-gray-100 bg-white p-4 text-left transition hover:border-gray-200">
-                        <span class="text-2xl">${player.avatar}</span>
+                        <span class="iconify text-2xl" data-icon="${player.avatar}"></span>
                         <span class="font-medium text-gray-900">${player.name}</span>
                         <span class="iconify ml-auto text-gray-300" data-icon="lucide:circle" data-width="20"></span>
                     </button>
@@ -1912,7 +1912,7 @@
             }).join('') + `
                     <button onclick="selectVote(-1)" id="vote-option-skip"
                         class="vote-option w-full flex items-center gap-3 rounded-xl border-2 border-gray-100 bg-white p-4 text-left transition hover:border-gray-200">
-                        <span class="text-2xl">⏭️</span>
+                        <span class="iconify text-2xl" data-icon="lucide:skip-forward"></span>
                         <span class="font-medium text-gray-600">Skip Vote</span>
                         <span class="iconify ml-auto text-gray-300" data-icon="lucide:circle" data-width="20"></span>
                     </button>
@@ -1962,14 +1962,14 @@
                 // Simple reveal for local mode
                 if (results.jesterEnabled) {
                     header.innerHTML = `
-                            <div class="text-6xl mb-4 animate-bounce-slow">🎭</div>
+                            <div class="mb-4 animate-bounce-slow"><span class="iconify text-6xl" data-icon="lucide:drama"></span></div>
                             <h2 class="text-3xl font-bold text-gray-900 font-quicksand">The Roles Were...</h2>
                         `;
                     jesterSection.classList.remove('hidden');
                     document.getElementById('result-jester-name').textContent = results.jesterName;
                 } else {
                     header.innerHTML = `
-                            <div class="text-6xl mb-4 animate-bounce-slow">🕵️</div>
+                            <div class="mb-4 animate-bounce-slow"><span class="iconify text-6xl" data-icon="lucide:venetian-mask"></span></div>
                             <h2 class="text-3xl font-bold text-gray-900 font-quicksand">The Impostor Was...</h2>
                         `;
                     jesterSection.classList.add('hidden');
@@ -1983,19 +1983,19 @@
 
                 if (results.impostorCaught) {
                     header.innerHTML = `
-                        <div class="text-6xl mb-4 animate-bounce-slow">🎉</div>
+                        <div class="mb-4 animate-bounce-slow"><span class="iconify text-6xl" data-icon="lucide:trophy"></span></div>
                         <h2 class="text-3xl font-bold text-green-600 font-quicksand">Crew Wins!</h2>
                         <p class="mt-2 text-gray-500">The impostor has been caught!</p>
                     `;
                 } else if (results.tie) {
                     header.innerHTML = `
-                        <div class="text-6xl mb-4">😅</div>
+                        <div class="mb-4"><span class="iconify text-6xl" data-icon="lucide:frown"></span></div>
                         <h2 class="text-3xl font-bold text-yellow-600 font-quicksand">It's a Tie!</h2>
                         <p class="mt-2 text-gray-500">No one was voted out.</p>
                     `;
                 } else {
                     header.innerHTML = `
-                        <div class="text-6xl mb-4 animate-bounce-slow">🕵️</div>
+                        <div class="mb-4 animate-bounce-slow"><span class="iconify text-6xl" data-icon="lucide:venetian-mask"></span></div>
                         <h2 class="text-3xl font-bold text-red-600 font-quicksand">Impostor Wins!</h2>
                         <p class="mt-2 text-gray-500">The impostor escaped detection!</p>
                     `;

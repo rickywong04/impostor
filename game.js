@@ -367,7 +367,7 @@ function playAgain() {
 // ==========================================
 // AVATAR UTILITIES
 // ==========================================
-const AVATARS = ['😀', '😎', '🤠', '🥳', '😺', '🦊', '🐸', '🦉', '🐙', '🦋', '🌸', '⭐', '🔥', '💎', '🎮', '🎨'];
+const AVATARS = ['lucide:user', 'lucide:smile', 'lucide:zap', 'lucide:star', 'lucide:heart', 'lucide:music', 'lucide:camera', 'lucide:sun', 'lucide:moon', 'lucide:cloud', 'lucide:umbrella', 'lucide:coffee', 'lucide:pizza', 'lucide:gift', 'lucide:rocket', 'lucide:ghost'];
 
 function getRandomAvatar() {
     return AVATARS[Math.floor(Math.random() * AVATARS.length)];
