@@ -907,6 +907,33 @@
         </div>
     </div>
 
+    <!-- ==========================================
+         MODAL: CUSTOM ALERT/CONFIRM
+         ========================================== -->
+    <div id="custom-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+        <div class="absolute inset-0 bg-black/50" onclick="closeCustomModal()"></div>
+        <div
+            class="relative max-w-sm w-full rounded-2xl bg-white p-6 shadow-2xl animate-fade-in-up">
+            <div class="flex flex-col items-center text-center">
+                <!-- Icon -->
+                <div id="modal-icon" class="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-red-100">
+                    <span class="iconify text-red-500 text-2xl" data-icon="lucide:alert-circle"></span>
+                </div>
+
+                <!-- Title -->
+                <h3 id="modal-title" class="text-lg font-bold text-gray-900 font-quicksand mb-2"></h3>
+
+                <!-- Message -->
+                <p id="modal-message" class="text-sm text-gray-600 mb-6"></p>
+
+                <!-- Buttons -->
+                <div id="modal-buttons" class="flex gap-3 w-full">
+                    <!-- Buttons will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Word Database -->
     <script src="wordDatabase.js"></script>
 
@@ -928,9 +955,15 @@
         // ===========================================
         // SCREEN MANAGEMENT
         // ===========================================
-        function handleBackToLobby(confirmLeave = false) {
+        async function handleBackToLobby(confirmLeave = false) {
             if (confirmLeave) {
-                if (!confirm('Are you sure you want to leave the game?')) {
+                const confirmed = await showConfirm(
+                    'Your progress in this game will be lost.',
+                    'Leave Game?',
+                    'Leave',
+                    'Stay'
+                );
+                if (!confirmed) {
                     return;
                 }
             }
@@ -1117,7 +1150,7 @@
             });
 
             if (names.length < 3) {
-                alert('Need at least 3 players to start!');
+                showAlert('Need at least 3 players to start!', 'Not Enough Players', 'users', 'red');
                 return;
             }
 
@@ -1127,7 +1160,7 @@
             const impostorHint = document.getElementById('impostor-hint').checked;
 
             if (jesterEnabled && names.length < 4) {
-                alert('Need at least 4 players to include a Jester!');
+                showAlert('Need at least 4 players to include a Jester!', 'Not Enough Players', 'party-popper', 'purple');
                 return;
             }
 
@@ -1157,7 +1190,7 @@
             if (result.success) {
                 showRevealScreen();
             } else {
-                alert(result.error);
+                showAlert(result.error, 'Error', 'alert-circle', 'red');
             }
         }
 
@@ -1183,7 +1216,7 @@
                     gameState.isHost = true;
                     showWaitingRoom();
                 } else {
-                    alert(result.error || 'Failed to create room');
+                    showAlert(result.error || 'Failed to create room', 'Connection Error', 'wifi-off', 'red');
                 }
             });
         }
@@ -1208,7 +1241,7 @@
                     gameState.isHost = false;
                     showWaitingRoom();
                 } else {
-                    alert(result.error || 'Failed to join room');
+                    showAlert(result.error || 'Failed to join room', 'Could Not Join', 'door-closed', 'red');
                 }
             });
         }
@@ -1278,7 +1311,7 @@
                 if (result.success) {
                     showRevealScreen();
                 } else {
-                    alert(result.error);
+                    showAlert(result.error, 'Error', 'alert-circle', 'red');
                 }
             } else {
                 // Online mode - get options and use socket
@@ -1288,7 +1321,7 @@
 
                 // Validate jester option
                 if (jesterEnabled && gameState.players.length < 4) {
-                    alert('Need at least 4 players to include a Jester!');
+                    showAlert('Need at least 4 players to include a Jester!', 'Not Enough Players', 'party-popper', 'purple');
                     return;
                 }
 
@@ -1300,7 +1333,7 @@
 
                 socketStartGame(options, (result) => {
                     if (!result.success) {
-                        alert(result.error || 'Failed to start game');
+                        showAlert(result.error || 'Failed to start game', 'Error', 'alert-circle', 'red');
                     }
                     // Server will emit 'game-started' event which triggers showOnlineRevealScreen
                 });
@@ -2073,7 +2106,7 @@
                 if (result.success) {
                     showRevealScreen();
                 } else {
-                    alert(result.error);
+                    showAlert(result.error, 'Error', 'alert-circle', 'red');
                 }
             } else {
                 // Online mode - tell server to reset and go back to waiting room
@@ -2109,6 +2142,96 @@
 
         function closeRules() {
             document.getElementById('rules-modal').classList.add('hidden');
+        }
+
+        // ===========================================
+        // CUSTOM MODAL (Alert/Confirm)
+        // ===========================================
+        let modalResolve = null;
+
+        const modalColorClasses = {
+            red: { bg: 'bg-red-100', text: 'text-red-500' },
+            purple: { bg: 'bg-purple-100', text: 'text-purple-500' },
+            amber: { bg: 'bg-amber-100', text: 'text-amber-500' },
+            emerald: { bg: 'bg-emerald-100', text: 'text-emerald-500' },
+            gray: { bg: 'bg-gray-100', text: 'text-gray-500' }
+        };
+
+        function showAlert(message, title = 'Oops!', icon = 'alert-circle', iconColor = 'red') {
+            const modal = document.getElementById('custom-modal');
+            const modalIcon = document.getElementById('modal-icon');
+            const modalTitle = document.getElementById('modal-title');
+            const modalMessage = document.getElementById('modal-message');
+            const modalButtons = document.getElementById('modal-buttons');
+
+            // Set icon with color mapping
+            const colors = modalColorClasses[iconColor] || modalColorClasses.red;
+            modalIcon.className = `mb-4 flex h-14 w-14 items-center justify-center rounded-full ${colors.bg}`;
+            modalIcon.innerHTML = `<span class="iconify ${colors.text} text-2xl" data-icon="lucide:${icon}"></span>`;
+
+            // Set content
+            modalTitle.textContent = title;
+            modalMessage.textContent = message;
+
+            // Set buttons (OK only)
+            modalButtons.innerHTML = `
+                <button onclick="closeCustomModal()"
+                    class="flex-1 rounded-xl bg-gray-900 py-3 text-sm font-semibold text-white transition hover:bg-gray-800">
+                    Got it
+                </button>
+            `;
+
+            modal.classList.remove('hidden');
+        }
+
+        function showConfirm(message, title = 'Are you sure?', confirmText = 'Yes', cancelText = 'Cancel') {
+            return new Promise((resolve) => {
+                modalResolve = resolve;
+
+                const modal = document.getElementById('custom-modal');
+                const modalIcon = document.getElementById('modal-icon');
+                const modalTitle = document.getElementById('modal-title');
+                const modalMessage = document.getElementById('modal-message');
+                const modalButtons = document.getElementById('modal-buttons');
+
+                // Set icon (warning style)
+                modalIcon.className = 'mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-amber-100';
+                modalIcon.innerHTML = '<span class="iconify text-amber-500 text-2xl" data-icon="lucide:alert-triangle"></span>';
+
+                // Set content
+                modalTitle.textContent = title;
+                modalMessage.textContent = message;
+
+                // Set buttons (Cancel + Confirm)
+                modalButtons.innerHTML = `
+                    <button onclick="resolveModal(false)"
+                        class="flex-1 rounded-xl border border-gray-200 bg-white py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-50">
+                        ${cancelText}
+                    </button>
+                    <button onclick="resolveModal(true)"
+                        class="flex-1 rounded-xl bg-red-500 py-3 text-sm font-semibold text-white transition hover:bg-red-600">
+                        ${confirmText}
+                    </button>
+                `;
+
+                modal.classList.remove('hidden');
+            });
+        }
+
+        function resolveModal(result) {
+            document.getElementById('custom-modal').classList.add('hidden');
+            if (modalResolve) {
+                modalResolve(result);
+                modalResolve = null;
+            }
+        }
+
+        function closeCustomModal() {
+            document.getElementById('custom-modal').classList.add('hidden');
+            if (modalResolve) {
+                modalResolve(false);
+                modalResolve = null;
+            }
         }
 
         // ===========================================
