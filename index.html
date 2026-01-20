@@ -229,20 +229,20 @@
                     <div class="border-t border-gray-50 bg-gray-50/50 -mx-8 px-8 pt-6 pb-8 mt-4">
                         <!-- Game Options -->
                         <div id="local-game-options" class="mb-8 space-y-4">
-                            <!-- Jester Option -->
+                            <!-- Impostor Hint Option -->
                             <label class="group flex cursor-pointer items-center justify-between rounded-xl">
                                 <div class="flex items-center gap-3">
                                     <div
-                                        class="flex h-10 w-10 items-center justify-center rounded-full bg-white text-purple-400 shadow-sm ring-1 ring-gray-100 transition group-hover:text-purple-500 group-hover:ring-purple-100">
-                                        <span class="iconify text-xl" data-icon="lucide:party-popper"></span>
+                                        class="flex h-10 w-10 items-center justify-center rounded-full bg-white text-emerald-400 shadow-sm ring-1 ring-gray-100 transition group-hover:text-emerald-500 group-hover:ring-emerald-100">
+                                        <span class="iconify text-xl" data-icon="lucide:lightbulb"></span>
                                     </div>
                                     <div class="flex flex-col">
-                                        <span class="text-sm font-semibold text-gray-700">Include Jester</span>
-                                        <span class="text-xs text-gray-400">Wins by getting voted out</span>
+                                        <span class="text-sm font-semibold text-gray-700">Give Impostor a Hint</span>
+                                        <span class="text-xs text-gray-400">Impostor gets a related word</span>
                                     </div>
                                 </div>
                                 <div class="relative flex items-center">
-                                    <input type="checkbox" id="jester-enabled"
+                                    <input type="checkbox" id="impostor-hint"
                                         class="peer h-5 w-5 appearance-none rounded-md border-2 border-gray-200 bg-white transition checked:border-red-500 checked:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500/20">
                                     <span
                                         class="iconify pointer-events-none absolute left-0.5 top-0.5 text-white opacity-0 transition peer-checked:opacity-100"
@@ -271,20 +271,20 @@
                                 </div>
                             </label>
 
-                            <!-- Impostor Hint Option -->
+                            <!-- Jester Option -->
                             <label class="group flex cursor-pointer items-center justify-between rounded-xl">
                                 <div class="flex items-center gap-3">
                                     <div
-                                        class="flex h-10 w-10 items-center justify-center rounded-full bg-white text-emerald-400 shadow-sm ring-1 ring-gray-100 transition group-hover:text-emerald-500 group-hover:ring-emerald-100">
-                                        <span class="iconify text-xl" data-icon="lucide:lightbulb"></span>
+                                        class="flex h-10 w-10 items-center justify-center rounded-full bg-white text-purple-400 shadow-sm ring-1 ring-gray-100 transition group-hover:text-purple-500 group-hover:ring-purple-100">
+                                        <span class="iconify text-xl" data-icon="lucide:party-popper"></span>
                                     </div>
                                     <div class="flex flex-col">
-                                        <span class="text-sm font-semibold text-gray-700">Give Impostor a Hint</span>
-                                        <span class="text-xs text-gray-400">Impostor gets a related word</span>
+                                        <span class="text-sm font-semibold text-gray-700">Include Jester</span>
+                                        <span class="text-xs text-gray-400">Wins by getting voted out</span>
                                     </div>
                                 </div>
                                 <div class="relative flex items-center">
-                                    <input type="checkbox" id="impostor-hint"
+                                    <input type="checkbox" id="jester-enabled"
                                         class="peer h-5 w-5 appearance-none rounded-md border-2 border-gray-200 bg-white transition checked:border-red-500 checked:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500/20">
                                     <span
                                         class="iconify pointer-events-none absolute left-0.5 top-0.5 text-white opacity-0 transition peer-checked:opacity-100"
@@ -447,25 +447,25 @@
                 <div id="waiting-room-options" class="border-t border-gray-100 p-4 space-y-3 hidden">
                     <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Game Options (Host)</p>
 
-                    <!-- Jester Option -->
+                    <!-- Impostor Hint Option -->
                     <label
-                        class="group flex items-center gap-3 rounded-xl bg-purple-50 p-3 cursor-pointer hover:bg-purple-100 transition">
+                        class="group flex items-center gap-3 rounded-xl bg-emerald-50 p-3 cursor-pointer hover:bg-emerald-100 transition">
                         <div class="relative flex items-center justify-center">
-                            <input type="checkbox" id="waiting-jester-enabled"
-                                class="peer h-5 w-5 appearance-none rounded border-2 border-purple-300 bg-white transition checked:border-purple-600 checked:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500/20">
+                            <input type="checkbox" id="waiting-impostor-hint"
+                                class="peer h-5 w-5 appearance-none rounded border-2 border-emerald-300 bg-white transition checked:border-emerald-600 checked:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/20">
                             <span class="pointer-events-none absolute opacity-0 transition peer-checked:opacity-100">
                                 <span class="iconify text-white" data-icon="lucide:check" data-width="14"
                                     data-stroke-width="3"></span>
                             </span>
                         </div>
                         <div class="flex-1">
-                            <span class="font-semibold text-purple-700">Include Jester</span>
-                            <p class="text-xs text-purple-500">One player wins by getting voted out (4+ players)</p>
+                            <span class="font-semibold text-emerald-700">Give Impostor a Hint</span>
+                            <p class="text-xs text-emerald-500">Impostor gets a related word to help blend in</p>
                         </div>
-                        <span class="iconify text-2xl" data-icon="lucide:party-popper"></span>
+                        <span class="iconify text-2xl" data-icon="lucide:lightbulb"></span>
                     </label>
 
-                    <!-- Game Twist Options -->
+                    <!-- Hide Topic Option -->
                     <label
                         class="group flex items-center gap-3 rounded-xl bg-amber-50 p-3 cursor-pointer hover:bg-amber-100 transition">
                         <div class="relative flex items-center justify-center">
@@ -482,21 +482,23 @@
                         </div>
                         <span class="iconify text-2xl" data-icon="lucide:eye-off"></span>
                     </label>
+
+                    <!-- Jester Option -->
                     <label
-                        class="group flex items-center gap-3 rounded-xl bg-emerald-50 p-3 cursor-pointer hover:bg-emerald-100 transition">
+                        class="group flex items-center gap-3 rounded-xl bg-purple-50 p-3 cursor-pointer hover:bg-purple-100 transition">
                         <div class="relative flex items-center justify-center">
-                            <input type="checkbox" id="waiting-impostor-hint"
-                                class="peer h-5 w-5 appearance-none rounded border-2 border-emerald-300 bg-white transition checked:border-emerald-600 checked:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/20">
+                            <input type="checkbox" id="waiting-jester-enabled"
+                                class="peer h-5 w-5 appearance-none rounded border-2 border-purple-300 bg-white transition checked:border-purple-600 checked:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500/20">
                             <span class="pointer-events-none absolute opacity-0 transition peer-checked:opacity-100">
                                 <span class="iconify text-white" data-icon="lucide:check" data-width="14"
                                     data-stroke-width="3"></span>
                             </span>
                         </div>
                         <div class="flex-1">
-                            <span class="font-semibold text-emerald-700">Give Impostor a Hint</span>
-                            <p class="text-xs text-emerald-500">Impostor gets a related word to help blend in</p>
+                            <span class="font-semibold text-purple-700">Include Jester</span>
+                            <p class="text-xs text-purple-500">One player wins by getting voted out (4+ players)</p>
                         </div>
-                        <span class="iconify text-2xl" data-icon="lucide:lightbulb"></span>
+                        <span class="iconify text-2xl" data-icon="lucide:party-popper"></span>
                     </label>
                 </div>
 
@@ -814,25 +816,23 @@
             <div id="results-twists-section" class="mb-4 hidden space-y-2">
                 <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Next Round Options</p>
 
-                <!-- Jester Toggle -->
-                <div id="results-jester-toggle">
-                    <label
-                        class="group flex items-center gap-3 rounded-xl bg-purple-50 p-3 cursor-pointer hover:bg-purple-100 transition">
-                        <div class="relative flex items-center justify-center">
-                            <input type="checkbox" id="jester-next-round"
-                                class="peer h-5 w-5 appearance-none rounded border-2 border-purple-300 bg-white transition checked:border-purple-600 checked:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500/20">
-                            <span class="pointer-events-none absolute opacity-0 transition peer-checked:opacity-100">
-                                <span class="iconify text-white" data-icon="lucide:check" data-width="14"
-                                    data-stroke-width="3"></span>
-                            </span>
-                        </div>
-                        <div class="flex-1 text-left">
-                            <span class="font-semibold text-purple-700">Include Jester</span>
-                            <p class="text-xs text-purple-500">One player wins by getting voted out</p>
-                        </div>
-                        <span class="iconify text-2xl" data-icon="lucide:party-popper"></span>
-                    </label>
-                </div>
+                <!-- Give Impostor a Hint -->
+                <label
+                    class="group flex items-center gap-3 rounded-xl bg-emerald-50 p-3 cursor-pointer hover:bg-emerald-100 transition">
+                    <div class="relative flex items-center justify-center">
+                        <input type="checkbox" id="impostor-hint-next-round"
+                            class="peer h-5 w-5 appearance-none rounded border-2 border-emerald-300 bg-white transition checked:border-emerald-600 checked:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/20">
+                        <span class="pointer-events-none absolute opacity-0 transition peer-checked:opacity-100">
+                            <span class="iconify text-white" data-icon="lucide:check" data-width="14"
+                                data-stroke-width="3"></span>
+                        </span>
+                    </div>
+                    <div class="flex-1 text-left">
+                        <span class="font-semibold text-emerald-700">Give Impostor a Hint</span>
+                        <p class="text-xs text-emerald-500">Impostor gets a related word to help blend in</p>
+                    </div>
+                    <span class="iconify text-2xl" data-icon="lucide:lightbulb"></span>
+                </label>
 
                 <!-- Hide Topic from Crew -->
                 <label
@@ -852,23 +852,25 @@
                     <span class="iconify text-2xl" data-icon="lucide:eye-off"></span>
                 </label>
 
-                <!-- Give Impostor a Hint -->
-                <label
-                    class="group flex items-center gap-3 rounded-xl bg-emerald-50 p-3 cursor-pointer hover:bg-emerald-100 transition">
-                    <div class="relative flex items-center justify-center">
-                        <input type="checkbox" id="impostor-hint-next-round"
-                            class="peer h-5 w-5 appearance-none rounded border-2 border-emerald-300 bg-white transition checked:border-emerald-600 checked:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/20">
-                        <span class="pointer-events-none absolute opacity-0 transition peer-checked:opacity-100">
-                            <span class="iconify text-white" data-icon="lucide:check" data-width="14"
-                                data-stroke-width="3"></span>
-                        </span>
-                    </div>
-                    <div class="flex-1 text-left">
-                        <span class="font-semibold text-emerald-700">Give Impostor a Hint</span>
-                        <p class="text-xs text-emerald-500">Impostor gets a related word to help blend in</p>
-                    </div>
-                    <span class="iconify text-2xl" data-icon="lucide:lightbulb"></span>
-                </label>
+                <!-- Jester Toggle -->
+                <div id="results-jester-toggle">
+                    <label
+                        class="group flex items-center gap-3 rounded-xl bg-purple-50 p-3 cursor-pointer hover:bg-purple-100 transition">
+                        <div class="relative flex items-center justify-center">
+                            <input type="checkbox" id="jester-next-round"
+                                class="peer h-5 w-5 appearance-none rounded border-2 border-purple-300 bg-white transition checked:border-purple-600 checked:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500/20">
+                            <span class="pointer-events-none absolute opacity-0 transition peer-checked:opacity-100">
+                                <span class="iconify text-white" data-icon="lucide:check" data-width="14"
+                                    data-stroke-width="3"></span>
+                            </span>
+                        </div>
+                        <div class="flex-1 text-left">
+                            <span class="font-semibold text-purple-700">Include Jester</span>
+                            <p class="text-xs text-purple-500">One player wins by getting voted out</p>
+                        </div>
+                        <span class="iconify text-2xl" data-icon="lucide:party-popper"></span>
+                    </label>
+                </div>
             </div>
 
             <!-- Buttons Container -->
