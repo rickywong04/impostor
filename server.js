@@ -13,11 +13,41 @@ app.use(cors());
 app.use(express.json());
 
 // ===========================================
-// GLOBAL METRICS (persisted to JSON file)
+// GLOBAL METRICS (persisted to JSONBin.io or local file)
 // ===========================================
 const METRICS_FILE = path.join(__dirname, 'metrics.json');
+const JSONBIN_BIN_ID = process.env.JSONBIN_BIN_ID;
+const JSONBIN_API_KEY = process.env.JSONBIN_API_KEY;
 
-function loadGlobalMetrics() {
+// In-memory cache to reduce API calls
+let metricsCache = null;
+let lastFetch = 0;
+const CACHE_TTL = 5000; // 5 seconds
+
+async function loadGlobalMetrics() {
+    // Use JSONBin.io if configured
+    if (JSONBIN_BIN_ID && JSONBIN_API_KEY) {
+        // Return cache if fresh
+        if (metricsCache && Date.now() - lastFetch < CACHE_TTL) {
+            return metricsCache;
+        }
+        try {
+            const res = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`, {
+                headers: { 'X-Access-Key': JSONBIN_API_KEY }
+            });
+            if (res.ok) {
+                const data = await res.json();
+                metricsCache = data.record;
+                lastFetch = Date.now();
+                return metricsCache;
+            }
+        } catch (err) {
+            console.error('Error loading metrics from JSONBin:', err);
+        }
+        return metricsCache || { gamesPlayed: 0, friendshipsTested: 0 };
+    }
+
+    // Fallback to local file
     try {
         if (fs.existsSync(METRICS_FILE)) {
             const data = fs.readFileSync(METRICS_FILE, 'utf8');
@@ -29,7 +59,29 @@ function loadGlobalMetrics() {
     return { gamesPlayed: 0, friendshipsTested: 0 };
 }
 
-function saveGlobalMetrics(metrics) {
+async function saveGlobalMetrics(metrics) {
+    // Update cache immediately
+    metricsCache = metrics;
+    lastFetch = Date.now();
+
+    // Use JSONBin.io if configured
+    if (JSONBIN_BIN_ID && JSONBIN_API_KEY) {
+        try {
+            await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Access-Key': JSONBIN_API_KEY
+                },
+                body: JSON.stringify(metrics)
+            });
+        } catch (err) {
+            console.error('Error saving metrics to JSONBin:', err);
+        }
+        return;
+    }
+
+    // Fallback to local file
     try {
         fs.writeFileSync(METRICS_FILE, JSON.stringify(metrics, null, 2));
     } catch (err) {
@@ -38,22 +90,22 @@ function saveGlobalMetrics(metrics) {
 }
 
 // API: Get global metrics
-app.get('/api/metrics', (req, res) => {
-    const metrics = loadGlobalMetrics();
+app.get('/api/metrics', async (req, res) => {
+    const metrics = await loadGlobalMetrics();
     res.json(metrics);
 });
 
 // API: Record a game
-app.post('/api/metrics/record', (req, res) => {
+app.post('/api/metrics/record', async (req, res) => {
     const { playerCount } = req.body;
     if (typeof playerCount !== 'number' || playerCount < 1) {
         return res.status(400).json({ error: 'Invalid playerCount' });
     }
 
-    const metrics = loadGlobalMetrics();
+    const metrics = await loadGlobalMetrics();
     metrics.gamesPlayed++;
     metrics.friendshipsTested += playerCount;
-    saveGlobalMetrics(metrics);
+    await saveGlobalMetrics(metrics);
 
     res.json(metrics);
 });
