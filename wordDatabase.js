@@ -187,7 +187,6 @@ const WORD_DATABASE = [
     { topic: "Drinks", word: "Oat Milk", hints: ["plant-based", "creamy", "mild"] },
     { topic: "Drinks", word: "Chocolate Milk", hints: ["mixed", "sweet", "cold"] },
     { topic: "Drinks", word: "Strawberry Milk", hints: ["flavored", "pink", "sweet"] },
-    { topic: "Drinks", word: "Milkshake", hints: ["blended", "thick", "straw"] },
     { topic: "Drinks", word: "Float", hints: ["scooped", "fizzy", "layered"] },
     { topic: "Drinks", word: "Slushie", hints: ["frozen", "crushed", "flavored"] },
     { topic: "Drinks", word: "Bubble Tea", hints: ["chewy", "straw", "balls"] },
@@ -371,7 +370,6 @@ const WORD_DATABASE = [
     { topic: "Birds", word: "Flamingo", hints: ["pink", "wades", "curved beak"] },
     { topic: "Birds", word: "Peacock", hints: ["fan tail", "displays", "iridescent"] },
     { topic: "Birds", word: "Hummingbird", hints: ["hovers", "tiny", "fast wings"] },
-    { topic: "Birds", word: "Parrot", hints: ["mimics", "curved beak", "perches"] },
     { topic: "Birds", word: "Toucan", hints: ["large beak", "colorful", "hops"] },
     { topic: "Birds", word: "Pelican", hints: ["pouch beak", "dives", "scoops"] },
     { topic: "Birds", word: "Swan", hints: ["long neck", "glides", "graceful"] },
@@ -390,7 +388,6 @@ const WORD_DATABASE = [
     { topic: "Birds", word: "Vulture", hints: ["circles", "scavenges", "bald head"] },
     { topic: "Birds", word: "Ostrich", hints: ["flightless", "runs fast", "large"] },
     { topic: "Birds", word: "Emu", hints: ["flightless", "tall", "runs"] },
-    { topic: "Birds", word: "Kiwi", hints: ["flightless", "nocturnal", "long beak"] },
     { topic: "Birds", word: "Woodpecker", hints: ["drums", "climbs", "pecks"] },
     { topic: "Birds", word: "Kingfisher", hints: ["dives", "colorful", "perches"] },
     { topic: "Birds", word: "Stork", hints: ["long legs", "wades", "large nest"] },
@@ -449,7 +446,6 @@ const WORD_DATABASE = [
     { topic: "Sports", word: "Running", hints: ["track", "pace", "distance"] },
     { topic: "Sports", word: "Track and Field", hints: ["events", "throws", "jumps"] },
     { topic: "Sports", word: "Rugby", hints: ["oval ball", "tackle", "scrum"] },
-    { topic: "Sports", word: "Cricket", hints: ["bat", "wicket", "innings"] },
     { topic: "Sports", word: "Lacrosse", hints: ["stick net", "cradle", "goal"] },
     { topic: "Sports", word: "Field Hockey", hints: ["stick", "turf", "dribble"] },
     { topic: "Sports", word: "Water Polo", hints: ["treading", "throw", "goal"] },
@@ -826,7 +822,6 @@ const WORD_DATABASE = [
     { topic: "Video Games", word: "Minecraft", hints: ["blocks", "building", "survival"] },
     { topic: "Video Games", word: "Fortnite", hints: ["battle royale", "building", "last one"] },
     { topic: "Video Games", word: "Mario Kart", hints: ["racing", "items", "tracks"] },
-    { topic: "Video Games", word: "Pokemon", hints: ["collecting", "battles", "creatures"] },
     { topic: "Video Games", word: "Tetris", hints: ["falling", "shapes", "clearing lines"] },
     { topic: "Video Games", word: "Pac-Man", hints: ["maze", "eating dots", "chased"] },
     { topic: "Video Games", word: "Super Mario Bros", hints: ["platformer", "jumping", "power-ups"] },
@@ -915,7 +910,6 @@ const WORD_DATABASE = [
     { topic: "Holidays", word: "Groundhog Day", hints: ["shadow", "prediction", "winter"] },
     { topic: "Holidays", word: "Black Friday", hints: ["shopping", "deals", "crowds"] },
     { topic: "Holidays", word: "Cyber Monday", hints: ["online", "deals", "shopping"] },
-    { topic: "Holidays", word: "Boxing Day", hints: ["after holiday", "sales", "gifts"] },
 
     // ==========================================
     // WEATHER (20 words)
@@ -1137,9 +1131,7 @@ const WORD_DATABASE = [
     { topic: "Space", word: "Constellation", hints: ["pattern", "stars", "named"] },
     { topic: "Space", word: "Satellite", hints: ["orbits", "artificial", "transmits"] },
     { topic: "Space", word: "Space Station", hints: ["orbits", "crew", "modules"] },
-    { topic: "Space", word: "Rocket", hints: ["launches", "propelled", "stages"] },
     { topic: "Space", word: "Telescope", hints: ["magnifies", "observes", "lens"] },
-    { topic: "Space", word: "Astronaut", hints: ["trained", "suit", "weightless"] },
     { topic: "Space", word: "Alien", hints: ["extraterrestrial", "unknown", "other worlds"] },
     { topic: "Space", word: "Solar System", hints: ["planets", "orbits", "sun center"] },
     { topic: "Space", word: "Milky Way", hints: ["our galaxy", "band", "billions of stars"] },
@@ -1151,7 +1143,6 @@ const WORD_DATABASE = [
     { topic: "Colors", word: "Blue", hints: ["cool", "calm", "sky"] },
     { topic: "Colors", word: "Green", hints: ["nature", "fresh", "growth"] },
     { topic: "Colors", word: "Yellow", hints: ["bright", "sunny", "cheerful"] },
-    { topic: "Colors", word: "Orange", hints: ["warm", "vibrant", "between"] },
     { topic: "Colors", word: "Purple", hints: ["mix", "royal", "rich"] },
     { topic: "Colors", word: "Pink", hints: ["soft", "light", "romantic"] },
     { topic: "Colors", word: "Black", hints: ["dark", "absence", "formal"] },
@@ -1166,11 +1157,9 @@ const WORD_DATABASE = [
     { topic: "Colors", word: "Maroon", hints: ["dark red", "deep", "rich"] },
     { topic: "Colors", word: "Navy", hints: ["dark blue", "deep", "classic"] },
     { topic: "Colors", word: "Teal", hints: ["blue-green", "medium", "sophisticated"] },
-    { topic: "Colors", word: "Coral", hints: ["pink-orange", "warm", "soft"] },
     { topic: "Colors", word: "Ivory", hints: ["off-white", "cream", "warm"] },
     { topic: "Colors", word: "Beige", hints: ["neutral", "tan", "light brown"] },
     { topic: "Colors", word: "Indigo", hints: ["deep blue", "purple tint", "dark"] },
-    { topic: "Colors", word: "Violet", hints: ["blue-purple", "floral", "soft"] },
     { topic: "Colors", word: "Crimson", hints: ["deep red", "rich", "bold"] },
 
     // ==========================================
@@ -1286,7 +1275,6 @@ const WORD_DATABASE = [
     { topic: "Hobbies", word: "Calligraphy", hints: ["lettering", "ink", "stylized"] },
     { topic: "Hobbies", word: "Scrapbooking", hints: ["arranging", "photos", "pages"] },
     { topic: "Hobbies", word: "Journaling", hints: ["writing", "reflecting", "daily"] },
-    { topic: "Hobbies", word: "Astronomy", hints: ["observing", "sky", "celestial"] },
     { topic: "Hobbies", word: "Geocaching", hints: ["finding", "coordinates", "hidden"] },
     { topic: "Hobbies", word: "Embroidery", hints: ["stitching", "thread", "decorating"] },
     { topic: "Hobbies", word: "Model Building", hints: ["assembling", "small scale", "detailed"] },
@@ -1294,9 +1282,7 @@ const WORD_DATABASE = [
     { topic: "Hobbies", word: "Dancing", hints: ["moving", "rhythm", "steps"] },
     { topic: "Hobbies", word: "Singing", hints: ["voice", "melodies", "performing"] },
     { topic: "Hobbies", word: "Camping", hints: ["outdoors", "tent", "nature"] },
-    { topic: "Hobbies", word: "Surfing", hints: ["riding", "waves", "balance"] },
     { topic: "Hobbies", word: "Sewing", hints: ["stitching", "fabric", "needle"] },
-    { topic: "Hobbies", word: "Chess", hints: ["strategy", "pieces", "thinking"] },
     { topic: "Hobbies", word: "Meditation", hints: ["stillness", "focus", "breathing"] },
 
     // ==========================================
@@ -1320,7 +1306,6 @@ const WORD_DATABASE = [
     { topic: "Candy", word: "Nerds", hints: ["tiny", "crunchy", "colorful"] },
     { topic: "Candy", word: "Jolly Rancher", hints: ["hard", "fruity", "long-lasting"] },
     { topic: "Candy", word: "Tootsie Roll", hints: ["chewy", "brown", "taffy-like"] },
-    { topic: "Candy", word: "Milky Way", hints: ["soft center", "layers", "brown"] },
     { topic: "Candy", word: "Butterfinger", hints: ["crispy", "flaky", "orange"] },
     { topic: "Candy", word: "Airheads", hints: ["stretchy", "flat", "chewy"] },
     { topic: "Candy", word: "Ring Pop", hints: ["wearable", "jewelry", "lick"] },
@@ -1349,7 +1334,6 @@ const WORD_DATABASE = [
     { topic: "Camping Gear", word: "Bug Spray", hints: ["insects", "repellent", "apply"] },
     { topic: "Camping Gear", word: "Sunscreen", hints: ["skin", "protect", "lotion"] },
     { topic: "Camping Gear", word: "Camp Chair", hints: ["fold", "sit", "portable"] },
-    { topic: "Camping Gear", word: "Hammock", hints: ["swing", "relax", "suspended"] },
     { topic: "Camping Gear", word: "Headlamp", hints: ["hands free", "forehead", "light"] },
     { topic: "Camping Gear", word: "Tarp", hints: ["cover", "weather", "sheet"] },
     { topic: "Camping Gear", word: "Camping Stove", hints: ["cook", "portable", "heat"] },
@@ -1370,26 +1354,17 @@ const WORD_DATABASE = [
     { topic: "Beach Items", word: "Goggles", hints: ["eyes", "see", "strap"] },
     { topic: "Beach Items", word: "Beach Ball", hints: ["inflatable", "colorful", "light"] },
     { topic: "Beach Items", word: "Sand Bucket", hints: ["fill", "carry", "handle"] },
-    { topic: "Beach Items", word: "Shovel", hints: ["dig", "scoop", "tool"] },
     { topic: "Beach Items", word: "Seashell", hints: ["collect", "hard", "natural"] },
-    { topic: "Beach Items", word: "Cooler", hints: ["cold", "insulated", "portable"] },
-    { topic: "Beach Items", word: "Sunscreen", hints: ["skin", "protect", "apply"] },
     { topic: "Beach Items", word: "Sun Hat", hints: ["shade", "brim", "head"] },
     { topic: "Beach Items", word: "Floatie", hints: ["inflatable", "stay up", "fun"] },
     { topic: "Beach Items", word: "Life Jacket", hints: ["safety", "buoyant", "wear"] },
-    { topic: "Beach Items", word: "Frisbee", hints: ["throw", "catch", "disc"] },
-    { topic: "Beach Items", word: "Volleyball", hints: ["net", "hit", "team"] },
     { topic: "Beach Items", word: "Picnic Basket", hints: ["food", "woven", "carry"] },
-    { topic: "Beach Items", word: "Flip Flops", hints: ["footwear", "open", "casual"] },
     { topic: "Beach Items", word: "Beach Chair", hints: ["fold", "sit", "low"] },
-    { topic: "Beach Items", word: "Kite", hints: ["fly", "wind", "string"] },
     { topic: "Beach Items", word: "Sand Dollar", hints: ["flat", "round", "find"] },
-    { topic: "Beach Items", word: "Starfish", hints: ["arms", "creature", "colorful"] },
 
     // ==========================================
     // ART SUPPLIES (25 words)
     // ==========================================
-    { topic: "Art Supplies", word: "Paintbrush", hints: ["bristles", "stroke", "handle"] },
     { topic: "Art Supplies", word: "Canvas", hints: ["fabric", "surface", "stretch"] },
     { topic: "Art Supplies", word: "Colored Pencils", hints: ["sharpen", "wood", "pigment"] },
     { topic: "Art Supplies", word: "Markers", hints: ["ink", "tip", "colorful"] },
@@ -1404,23 +1379,17 @@ const WORD_DATABASE = [
     { topic: "Art Supplies", word: "Pastels", hints: ["soft", "blend", "powdery"] },
     { topic: "Art Supplies", word: "Clay", hints: ["mold", "sculpt", "shape"] },
     { topic: "Art Supplies", word: "Glue", hints: ["stick", "adhesive", "bond"] },
-    { topic: "Art Supplies", word: "Scissors", hints: ["cut", "blades", "handle"] },
     { topic: "Art Supplies", word: "Glitter", hints: ["sparkle", "messy", "decorative"] },
     { topic: "Art Supplies", word: "Stickers", hints: ["peel", "adhesive", "decorate"] },
     { topic: "Art Supplies", word: "Construction Paper", hints: ["colorful", "thick", "sheets"] },
     { topic: "Art Supplies", word: "Mod Podge", hints: ["seal", "gloss", "craft"] },
     { topic: "Art Supplies", word: "Ink", hints: ["liquid", "dark", "bottle"] },
-    { topic: "Art Supplies", word: "Eraser", hints: ["remove", "rubber", "correct"] },
-    { topic: "Art Supplies", word: "Ruler", hints: ["straight", "measure", "edge"] },
     { topic: "Art Supplies", word: "Stencil", hints: ["trace", "shape", "template"] },
     { topic: "Art Supplies", word: "Spray Paint", hints: ["aerosol", "quick", "coat"] },
 
     // ==========================================
     // SUPERHEROES (30 words)
     // ==========================================
-    { topic: "Superheroes", word: "Spider-Man", hints: ["climbs", "swings", "arachnid"] },
-    { topic: "Superheroes", word: "Batman", hints: ["dark", "no powers", "wealthy"] },
-    { topic: "Superheroes", word: "Superman", hints: ["alien", "fly", "invulnerable"] },
     { topic: "Superheroes", word: "Wonder Woman", hints: ["warrior", "lasso", "princess"] },
     { topic: "Superheroes", word: "Iron Man", hints: ["armor", "genius", "tech"] },
     { topic: "Superheroes", word: "Captain America", hints: ["shield", "soldier", "patriotic"] },
@@ -1437,7 +1406,6 @@ const WORD_DATABASE = [
     { topic: "Superheroes", word: "Ant-Man", hints: ["shrink", "insects", "size change"] },
     { topic: "Superheroes", word: "Hawkeye", hints: ["bow", "arrow", "marksman"] },
     { topic: "Superheroes", word: "Catwoman", hints: ["thief", "feline", "agile"] },
-    { topic: "Superheroes", word: "Robin", hints: ["sidekick", "bird name", "young"] },
     { topic: "Superheroes", word: "Supergirl", hints: ["alien", "related", "fly"] },
     { topic: "Superheroes", word: "Shazam", hints: ["child", "magic word", "lightning"] },
     { topic: "Superheroes", word: "Vision", hints: ["android", "intangible", "synthetic"] },
@@ -1452,9 +1420,6 @@ const WORD_DATABASE = [
     // ==========================================
     // FAIRY TALES (25 words)
     // ==========================================
-    { topic: "Fairy Tales", word: "Cinderella", hints: ["footwear", "ball", "midnight"] },
-    { topic: "Fairy Tales", word: "Snow White", hints: ["poisoned", "sleeps", "fairest"] },
-    { topic: "Fairy Tales", word: "Sleeping Beauty", hints: ["curse", "sleeps", "awakened"] },
     { topic: "Fairy Tales", word: "Little Red Riding Hood", hints: ["forest", "visit", "disguise"] },
     { topic: "Fairy Tales", word: "Rapunzel", hints: ["tower", "locked away", "climbing"] },
     { topic: "Fairy Tales", word: "Hansel and Gretel", hints: ["siblings", "lost", "edible house"] },
@@ -1462,9 +1427,7 @@ const WORD_DATABASE = [
     { topic: "Fairy Tales", word: "The Three Little Pigs", hints: ["siblings", "homes", "blown down"] },
     { topic: "Fairy Tales", word: "Goldilocks", hints: ["intruder", "three sizes", "preferences"] },
     { topic: "Fairy Tales", word: "The Ugly Duckling", hints: ["outcast", "different", "transform"] },
-    { topic: "Fairy Tales", word: "Beauty and the Beast", hints: ["prisoner", "curse", "love"] },
     { topic: "Fairy Tales", word: "Rumpelstiltskin", hints: ["secret", "guess", "spinning"] },
-    { topic: "Fairy Tales", word: "The Little Mermaid", hints: ["trade", "legs", "ocean"] },
     { topic: "Fairy Tales", word: "Pinocchio", hints: ["wooden", "grows", "wishes"] },
     { topic: "Fairy Tales", word: "Peter Pan", hints: ["never ages", "fly", "adventure"] },
     { topic: "Fairy Tales", word: "Alice in Wonderland", hints: ["falls", "strange world", "nonsense"] },
@@ -1479,28 +1442,103 @@ const WORD_DATABASE = [
     { topic: "Fairy Tales", word: "The Pied Piper", hints: ["music", "vermin", "followed"] },
 
     // ==========================================
-    // DANCE STYLES (20 words)
+    // PHOBIAS (20 words)
     // ==========================================
-    { topic: "Dance Styles", word: "Ballet", hints: ["toes", "graceful", "classical"] },
-    { topic: "Dance Styles", word: "Hip Hop", hints: ["street", "urban", "modern"] },
-    { topic: "Dance Styles", word: "Salsa", hints: ["partner", "fast", "rhythm"] },
-    { topic: "Dance Styles", word: "Tango", hints: ["partner", "dramatic", "close"] },
-    { topic: "Dance Styles", word: "Waltz", hints: ["ballroom", "spinning", "elegant"] },
-    { topic: "Dance Styles", word: "Jazz", hints: ["energetic", "theater", "expressive"] },
-    { topic: "Dance Styles", word: "Tap", hints: ["sounds", "rhythm", "feet"] },
-    { topic: "Dance Styles", word: "Breakdancing", hints: ["floor", "acrobatic", "athletic"] },
-    { topic: "Dance Styles", word: "Flamenco", hints: ["stomping", "passionate", "guitar"] },
-    { topic: "Dance Styles", word: "Line Dancing", hints: ["rows", "group", "synchronized"] },
-    { topic: "Dance Styles", word: "Swing", hints: ["retro", "partner", "upbeat"] },
-    { topic: "Dance Styles", word: "Contemporary", hints: ["modern", "emotional", "fluid"] },
-    { topic: "Dance Styles", word: "Belly Dance", hints: ["torso", "fluid", "isolated"] },
-    { topic: "Dance Styles", word: "Folk Dance", hints: ["traditional", "cultural", "heritage"] },
-    { topic: "Dance Styles", word: "Cha-Cha", hints: ["partner", "quick steps", "rhythm"] },
-    { topic: "Dance Styles", word: "Rumba", hints: ["partner", "romantic", "slow"] },
-    { topic: "Dance Styles", word: "Polka", hints: ["bouncy", "lively", "European"] },
-    { topic: "Dance Styles", word: "Irish Step Dance", hints: ["legs only", "rigid torso", "fast feet"] },
-    { topic: "Dance Styles", word: "Bollywood", hints: ["expressive", "colorful", "film"] },
-    { topic: "Dance Styles", word: "Disco", hints: ["retro", "lights", "groovy"] },
+    { topic: "Phobias", word: "Arachnophobia", hints: ["legs", "corners", "webs"] },
+    { topic: "Phobias", word: "Claustrophobia", hints: ["walls", "tight", "escape"] },
+    { topic: "Phobias", word: "Acrophobia", hints: ["looking down", "edge", "dizzy"] },
+    { topic: "Phobias", word: "Agoraphobia", hints: ["outside", "open", "crowds"] },
+    { topic: "Phobias", word: "Trypophobia", hints: ["clusters", "patterns", "holes"] },
+    { topic: "Phobias", word: "Nyctophobia", hints: ["shadows", "night", "unseen"] },
+    { topic: "Phobias", word: "Ophidiophobia", hints: ["slither", "scales", "hiss"] },
+    { topic: "Phobias", word: "Cynophobia", hints: ["bark", "bite", "four legs"] },
+    { topic: "Phobias", word: "Thalassophobia", hints: ["deep", "waves", "vast"] },
+    { topic: "Phobias", word: "Glossophobia", hints: ["audience", "stage", "voice"] },
+    { topic: "Phobias", word: "Aerophobia", hints: ["turbulence", "cabin", "altitude"] },
+    { topic: "Phobias", word: "Hemophobia", hints: ["red", "wounds", "faint"] },
+    { topic: "Phobias", word: "Dentophobia", hints: ["chair", "drill", "rinse"] },
+    { topic: "Phobias", word: "Coulrophobia", hints: ["makeup", "circus", "red nose"] },
+    { topic: "Phobias", word: "Entomophobia", hints: ["buzzing", "swarm", "crawling"] },
+    { topic: "Phobias", word: "Astraphobia", hints: ["flash", "rumble", "storm"] },
+    { topic: "Phobias", word: "Thanatophobia", hints: ["end", "inevitable", "unknown"] },
+    { topic: "Phobias", word: "Mysophobia", hints: ["germs", "dirty", "wash"] },
+    { topic: "Phobias", word: "Aquaphobia", hints: ["wet", "submerge", "drown"] },
+    { topic: "Phobias", word: "Pyrophobia", hints: ["flames", "heat", "burns"] },
+
+    // ==========================================
+    // CAMPING GEAR (additional words)
+    // ==========================================
+    { topic: "Camping Gear", word: "Canteen", hints: ["water", "metal", "clip"] },
+    { topic: "Camping Gear", word: "Camp Stove", hints: ["propane", "cook", "portable"] },
+    { topic: "Camping Gear", word: "Sleeping Pad", hints: ["inflate", "cushion", "ground"] },
+    { topic: "Camping Gear", word: "Fire Starter", hints: ["sparks", "kindling", "ignite"] },
+    { topic: "Camping Gear", word: "Insect Repellent", hints: ["spray", "bites", "smell"] },
+    { topic: "Camping Gear", word: "Mess Kit", hints: ["plates", "utensils", "compact"] },
+    { topic: "Camping Gear", word: "Water Filter", hints: ["pump", "purify", "stream"] },
+    { topic: "Camping Gear", word: "Rope", hints: ["knots", "tie", "coil"] },
+    { topic: "Camping Gear", word: "Bear Canister", hints: ["sealed", "scent-proof", "wildlife"] },
+
+
+    // ==========================================
+    // JOBS (25 words)
+    // ==========================================
+    { topic: "Jobs", word: "Bartender", hints: ["pours", "tips", "counter"] },
+    { topic: "Jobs", word: "Lifeguard", hints: ["whistle", "chair", "watching"] },
+    { topic: "Jobs", word: "Waiter", hints: ["tables", "orders", "tray"] },
+    { topic: "Jobs", word: "Coach", hints: ["whistle", "plays", "team"] },
+    { topic: "Jobs", word: "DJ", hints: ["booth", "mixing", "requests"] },
+    { topic: "Jobs", word: "Zookeeper", hints: ["enclosures", "feeding", "habitats"] },
+
+    // ==========================================
+    // WEATHER (11 words - additions to existing Weather topic)
+    // ==========================================
+    { topic: "Weather", word: "Rain", hints: ["drops", "wet", "clouds"] },
+    { topic: "Weather", word: "Snow", hints: ["flakes", "cold", "blanket"] },
+    { topic: "Weather", word: "Thunder", hints: ["loud", "rumble", "after flash"] },
+    { topic: "Weather", word: "Lightning", hints: ["bright", "instant", "bolt"] },
+    { topic: "Weather", word: "Frost", hints: ["morning", "crystals", "cold surface"] },
+    { topic: "Weather", word: "Sleet", hints: ["icy", "mix", "slippery"] },
+    { topic: "Weather", word: "Overcast", hints: ["gray", "covered", "no shadows"] },
+    { topic: "Weather", word: "Breeze", hints: ["gentle", "cool", "leaves move"] },
+    { topic: "Weather", word: "Monsoon", hints: ["seasonal", "heavy", "flooding"] },
+    { topic: "Weather", word: "Mist", hints: ["light", "damp", "thin"] },
+    { topic: "Weather", word: "Dew", hints: ["morning", "grass", "droplets"] },
+
+    // ==========================================
+    // ROOMS (20 words)
+    // ==========================================
+    { topic: "Rooms", word: "Kitchen", hints: ["appliances", "cook", "counter"] },
+    { topic: "Rooms", word: "Bathroom", hints: ["tiles", "mirror", "privacy"] },
+    { topic: "Rooms", word: "Bedroom", hints: ["rest", "pillow", "private"] },
+    { topic: "Rooms", word: "Living Room", hints: ["couch", "gather", "TV"] },
+    { topic: "Rooms", word: "Basement", hints: ["below", "stairs down", "storage"] },
+    { topic: "Rooms", word: "Attic", hints: ["above", "dusty", "forgotten"] },
+    { topic: "Rooms", word: "Garage", hints: ["car", "tools", "door opens"] },
+    { topic: "Rooms", word: "Dining Room", hints: ["table", "meals", "chairs"] },
+    { topic: "Rooms", word: "Laundry Room", hints: ["machines", "folding", "detergent"] },
+    { topic: "Rooms", word: "Office", hints: ["desk", "work", "computer"] },
+    { topic: "Rooms", word: "Nursery", hints: ["crib", "small", "mobile"] },
+    { topic: "Rooms", word: "Closet", hints: ["hangers", "dark", "small space"] },
+    { topic: "Rooms", word: "Pantry", hints: ["shelves", "food", "organized"] },
+    { topic: "Rooms", word: "Foyer", hints: ["entrance", "first impression", "welcome"] },
+    { topic: "Rooms", word: "Den", hints: ["cozy", "relax", "casual"] },
+    { topic: "Rooms", word: "Sunroom", hints: ["windows", "bright", "plants"] },
+    { topic: "Rooms", word: "Mudroom", hints: ["entrance", "shoes", "coats"] },
+    { topic: "Rooms", word: "Guest Room", hints: ["visitors", "spare", "bed"] },
+    { topic: "Rooms", word: "Home Theater", hints: ["screen", "dark", "seats"] },
+    { topic: "Rooms", word: "Wine Cellar", hints: ["bottles", "cool", "racks"] },
+
+    // ==========================================
+    // TRANSPORTATION (25 words)
+    // ==========================================
+    { topic: "Transportation", word: "Car", hints: ["wheels", "drive", "park"] },
+    { topic: "Transportation", word: "Subway", hints: ["underground", "stations", "tunnels"] },
+    { topic: "Transportation", word: "Ferry", hints: ["water", "passengers", "dock"] },
+    { topic: "Transportation", word: "Sailboat", hints: ["wind", "mast", "tack"] },
+    { topic: "Transportation", word: "Tram", hints: ["rails", "city", "overhead wires"] },
+    { topic: "Transportation", word: "Rickshaw", hints: ["pulled", "passenger", "street"] },
+    { topic: "Transportation", word: "Unicycle", hints: ["one wheel", "balance", "pedal"] },
+
 ];
 
 // Export for Node.js (server)
