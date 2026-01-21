@@ -13,86 +13,163 @@ app.use(cors());
 app.use(express.json());
 
 // ===========================================
-// GLOBAL METRICS (persisted to JSONBin.io or local file)
+// GLOBAL METRICS (persisted to JSONBin.io)
 // ===========================================
-const METRICS_FILE = path.join(__dirname, 'metrics.json');
 const JSONBIN_BIN_ID = process.env.JSONBIN_BIN_ID;
 const JSONBIN_API_KEY = process.env.JSONBIN_API_KEY;
 
-// In-memory cache to reduce API calls
+// In-memory cache - this is the source of truth after startup
 let metricsCache = null;
 let lastFetch = 0;
+let jsonBinVerified = false;
 const CACHE_TTL = 5000; // 5 seconds
 
-async function loadGlobalMetrics() {
-    // Use JSONBin.io if configured
-    if (JSONBIN_BIN_ID && JSONBIN_API_KEY) {
-        // Return cache if fresh
-        if (metricsCache && Date.now() - lastFetch < CACHE_TTL) {
-            return metricsCache;
-        }
+// Retry helper with exponential backoff
+async function fetchWithRetry(url, options, maxRetries = 3) {
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
         try {
-            const res = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`, {
-                headers: { 'X-Access-Key': JSONBIN_API_KEY }
-            });
+            const res = await fetch(url, options);
             if (res.ok) {
-                const data = await res.json();
-                metricsCache = data.record;
-                lastFetch = Date.now();
-                return metricsCache;
+                return res;
+            }
+            const errorText = await res.text();
+            console.error(`JSONBin API error (attempt ${attempt}/${maxRetries}): ${res.status} - ${errorText}`);
+            if (attempt < maxRetries) {
+                await new Promise(r => setTimeout(r, 1000 * attempt)); // Exponential backoff
             }
         } catch (err) {
-            console.error('Error loading metrics from JSONBin:', err);
+            console.error(`JSONBin fetch error (attempt ${attempt}/${maxRetries}):`, err.message);
+            if (attempt < maxRetries) {
+                await new Promise(r => setTimeout(r, 1000 * attempt));
+            }
         }
-        return metricsCache || { gamesPlayed: 0, friendshipsTested: 0 };
+    }
+    return null;
+}
+
+async function loadGlobalMetrics(forceRefresh = false) {
+    // Return cache if fresh (unless forcing refresh)
+    if (!forceRefresh && metricsCache && Date.now() - lastFetch < CACHE_TTL) {
+        return metricsCache;
     }
 
-    // Fallback to local file
-    try {
-        if (fs.existsSync(METRICS_FILE)) {
-            const data = fs.readFileSync(METRICS_FILE, 'utf8');
-            return JSON.parse(data);
+    // Use JSONBin.io if configured
+    if (JSONBIN_BIN_ID && JSONBIN_API_KEY) {
+        const res = await fetchWithRetry(
+            `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`,
+            { headers: { 'X-Master-Key': JSONBIN_API_KEY } }
+        );
+
+        if (res) {
+            try {
+                const data = await res.json();
+                if (data.record && typeof data.record.gamesPlayed === 'number') {
+                    metricsCache = data.record;
+                    lastFetch = Date.now();
+                    console.log(`[Metrics] Loaded from JSONBin: ${JSON.stringify(metricsCache)}`);
+                    return metricsCache;
+                } else {
+                    console.error('[Metrics] Invalid data structure from JSONBin:', data);
+                }
+            } catch (parseErr) {
+                console.error('[Metrics] Failed to parse JSONBin response:', parseErr.message);
+            }
         }
-    } catch (err) {
-        console.error('Error loading metrics:', err);
+
+        // If we have a cache, use it (don't reset to zeros on temporary failures)
+        if (metricsCache) {
+            console.warn('[Metrics] JSONBin failed, using cached values:', metricsCache);
+            return metricsCache;
+        }
+
+        // Only return zeros if we've never successfully loaded
+        console.error('[Metrics] CRITICAL: No cache available and JSONBin failed!');
+        return { gamesPlayed: 0, friendshipsTested: 0, _error: 'JSONBin unavailable' };
     }
-    return { gamesPlayed: 0, friendshipsTested: 0 };
+
+    console.warn('[Metrics] JSONBin not configured! Set JSONBIN_BIN_ID and JSONBIN_API_KEY');
+    return metricsCache || { gamesPlayed: 0, friendshipsTested: 0, _error: 'Not configured' };
 }
 
 async function saveGlobalMetrics(metrics) {
+    // Remove any error flags before saving
+    const cleanMetrics = { gamesPlayed: metrics.gamesPlayed, friendshipsTested: metrics.friendshipsTested };
+
     // Update cache immediately
-    metricsCache = metrics;
+    metricsCache = cleanMetrics;
     lastFetch = Date.now();
 
     // Use JSONBin.io if configured
     if (JSONBIN_BIN_ID && JSONBIN_API_KEY) {
-        try {
-            await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`, {
+        const res = await fetchWithRetry(
+            `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`,
+            {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-Access-Key': JSONBIN_API_KEY
+                    'X-Master-Key': JSONBIN_API_KEY
                 },
-                body: JSON.stringify(metrics)
-            });
-        } catch (err) {
-            console.error('Error saving metrics to JSONBin:', err);
+                body: JSON.stringify(cleanMetrics)
+            }
+        );
+
+        if (res) {
+            console.log(`[Metrics] Saved to JSONBin: ${JSON.stringify(cleanMetrics)}`);
+        } else {
+            console.error('[Metrics] FAILED to save to JSONBin! Data may be lost on restart.');
         }
         return;
     }
 
-    // Fallback to local file
-    try {
-        fs.writeFileSync(METRICS_FILE, JSON.stringify(metrics, null, 2));
-    } catch (err) {
-        console.error('Error saving metrics:', err);
+    console.warn('[Metrics] Cannot save - JSONBin not configured');
+}
+
+// Verify JSONBin connection on startup
+async function verifyJsonBinConnection() {
+    console.log('\n[Metrics] ========================================');
+    console.log('[Metrics] Verifying JSONBin.io connection...');
+    console.log(`[Metrics] BIN_ID configured: ${JSONBIN_BIN_ID ? 'YES' : 'NO'}`);
+    console.log(`[Metrics] API_KEY configured: ${JSONBIN_API_KEY ? 'YES' : 'NO'}`);
+
+    if (!JSONBIN_BIN_ID || !JSONBIN_API_KEY) {
+        console.error('[Metrics] CRITICAL: JSONBin credentials not configured!');
+        console.error('[Metrics] Metrics will NOT persist across deploys!');
+        console.log('[Metrics] ========================================\n');
+        return false;
     }
+
+    const metrics = await loadGlobalMetrics(true);
+
+    if (metrics._error) {
+        console.error('[Metrics] CRITICAL: Failed to connect to JSONBin!');
+        console.error('[Metrics] Check your JSONBIN_BIN_ID and JSONBIN_API_KEY');
+        console.log('[Metrics] ========================================\n');
+        return false;
+    }
+
+    jsonBinVerified = true;
+    console.log('[Metrics] SUCCESS: JSONBin connected!');
+    console.log(`[Metrics] Current values: ${metrics.gamesPlayed} games, ${metrics.friendshipsTested} friendships`);
+    console.log('[Metrics] ========================================\n');
+    return true;
 }
 
 // API: Get global metrics
 app.get('/api/metrics', async (req, res) => {
     const metrics = await loadGlobalMetrics();
-    res.json(metrics);
+    // Don't expose internal error flags to client
+    res.json({ gamesPlayed: metrics.gamesPlayed, friendshipsTested: metrics.friendshipsTested });
+});
+
+// API: Health check for metrics system
+app.get('/api/metrics/health', async (req, res) => {
+    const status = {
+        jsonBinConfigured: !!(JSONBIN_BIN_ID && JSONBIN_API_KEY),
+        jsonBinVerified: jsonBinVerified,
+        cachePopulated: metricsCache !== null,
+        currentCache: metricsCache
+    };
+    res.json(status);
 });
 
 // API: Record a game
@@ -103,11 +180,19 @@ app.post('/api/metrics/record', async (req, res) => {
     }
 
     const metrics = await loadGlobalMetrics();
+
+    // Safety check: don't save if we couldn't load properly
+    if (metrics._error) {
+        console.error('[Metrics] Refusing to record game - metrics system not ready');
+        return res.status(503).json({ error: 'Metrics system unavailable', ...metrics });
+    }
+
     metrics.gamesPlayed++;
     metrics.friendshipsTested += playerCount;
     await saveGlobalMetrics(metrics);
 
-    res.json(metrics);
+    console.log(`[Metrics] Game recorded: ${metrics.gamesPlayed} total games, ${metrics.friendshipsTested} friendships`);
+    res.json({ gamesPlayed: metrics.gamesPlayed, friendshipsTested: metrics.friendshipsTested });
 });
 
 const httpServer = createServer(app);
@@ -569,6 +654,8 @@ app.get('/', (req, res) => {
 app.use(express.static('.'));
 
 const PORT = process.env.PORT || 3000;
-httpServer.listen(PORT, () => {
+httpServer.listen(PORT, async () => {
     console.log(`\nImpostor Game Server running on http://localhost:${PORT}\n`);
+    // Verify JSONBin connection on startup - this preloads the cache
+    await verifyJsonBinConnection();
 });
