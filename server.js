@@ -263,7 +263,8 @@ io.on('connection', (socket) => {
                 turnOrder: [],
                 currentPlayerIndex: 0,
                 submittedWords: [],
-                votes: {}
+                votes: {},
+                impostorHistory: []  // Track recent imposters for fairer distribution
             }
         };
 
@@ -344,7 +345,29 @@ io.on('connection', (socket) => {
 
         // Setup game
         room.gameState.currentWordData = getRandomWordData();
-        room.gameState.impostorIndex = Math.floor(Math.random() * room.players.length);
+
+        // Fair imposter selection - avoid recent imposters until everyone has had a turn
+        const playerCount = room.players.length;
+        let eligibleIndices = [];
+
+        // Get players who haven't been imposter recently
+        for (let i = 0; i < playerCount; i++) {
+            if (!room.gameState.impostorHistory.includes(i)) {
+                eligibleIndices.push(i);
+            }
+        }
+
+        // If everyone has been imposter (or history is stale), reset and allow anyone
+        if (eligibleIndices.length === 0) {
+            room.gameState.impostorHistory = [];
+            eligibleIndices = [...Array(playerCount).keys()];
+        }
+
+        // Pick randomly from eligible players
+        room.gameState.impostorIndex = eligibleIndices[Math.floor(Math.random() * eligibleIndices.length)];
+
+        // Add to history
+        room.gameState.impostorHistory.push(room.gameState.impostorIndex);
         room.gameState.turnOrder = shuffleArray([...Array(room.players.length).keys()]);
         room.gameState.currentPlayerIndex = 0;
         room.gameState.submittedWords = [];
@@ -551,7 +574,8 @@ io.on('connection', (socket) => {
         const room = rooms.get(code);
         if (!room || room.hostId !== socket.id) return;
 
-        // Reset game state
+        // Reset game state but preserve imposter history for fair distribution
+        const prevHistory = room.gameState.impostorHistory || [];
         room.gameState = {
             phase: 'lobby',
             currentWordData: null,
@@ -559,7 +583,8 @@ io.on('connection', (socket) => {
             turnOrder: [],
             currentPlayerIndex: 0,
             submittedWords: [],
-            votes: {}
+            votes: {},
+            impostorHistory: prevHistory
         };
         room.players.forEach(p => p.ready = false);
 
@@ -582,6 +607,11 @@ io.on('connection', (socket) => {
             socket.leave(code);
             socket.roomCode = null;
             console.log(`${player.name} left room ${code}`);
+
+            // Reset imposter history when players change (indices become invalid)
+            if (room.gameState.impostorHistory) {
+                room.gameState.impostorHistory = [];
+            }
 
             if (room.players.length === 0) {
                 // Delete empty room
@@ -616,6 +646,11 @@ io.on('connection', (socket) => {
             const player = room.players[playerIndex];
             room.players.splice(playerIndex, 1);
             console.log(`${player.name} left room ${code}`);
+
+            // Reset imposter history when players change (indices become invalid)
+            if (room.gameState.impostorHistory) {
+                room.gameState.impostorHistory = [];
+            }
 
             if (room.players.length === 0) {
                 // Delete empty room
